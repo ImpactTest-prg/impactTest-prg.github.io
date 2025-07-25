@@ -1,0 +1,43 @@
+<div id="counter" style="font-size: 24px; margin-bottom: 20px;">Clicks: 0</div>
+<button id="clickBtn" style="position: absolute; padding: 12px 24px; font-size: 18px; border: none; border-radius: 20px; background-color: #3498db; color: white;">Click me</button>
+
+<script>
+  let count = 0;
+  const button = document.getElementById("clickBtn");
+  const counter = document.getElementById("counter");
+
+  let posX = window.innerWidth / 2;
+  let posY = window.innerHeight / 2;
+
+  function getRandomColor() {
+    return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+  }
+
+  function moveButton() {
+    const rect = button.getBoundingClientRect();
+    const btnWidth = rect.width;
+    const btnHeight = rect.height;
+
+    const offsetX = Math.floor(Math.random() * 161) - 80;
+    const offsetY = Math.floor(Math.random() * 161) - 80;
+
+    posX += offsetX;
+    posY += offsetY;
+
+    // Clamp to visible area using actual button size
+    posX = Math.max(0, Math.min(posX, window.innerWidth - btnWidth));
+    posY = Math.max(0, Math.min(posY, window.innerHeight - btnHeight));
+
+    button.style.left = posX + "px";
+    button.style.top = posY + "px";
+    button.style.backgroundColor = getRandomColor();
+  }
+
+  button.onclick = function () {
+    count++;
+    counter.innerText = "Clicks: " + count;
+    moveButton();
+  };
+
+  moveButton();
+</script>
